@@ -6,6 +6,7 @@
 # Ubuntu bionic ships with cmake 3.10.
 cmake_minimum_required(VERSION 3.10)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+set (CMAKE_CXX_STANDARD 11)
 
 # Honor VISIBILITY_INLINES_HIDDEN on all types of targets.
 if(POLICY CMP0063)
@@ -188,4 +189,13 @@ add_subdirectory(lib)
 
 # The actual ssimulacra 2 implementation
 add_executable(ssimulacra2 ssimulacra2_main.cc ssimulacra2.cc)
+
+add_library(ssim2 SHARED ssim2.cc ssimulacra2.cc)
+set_target_properties(ssim2 PROPERTIES PUBLIC_HEADER ssimulacra2.h)
+target_link_libraries(ssim2 jxl jxl_extras-static hwy)
+
 target_link_libraries(ssimulacra2 jxl jxl_extras-static hwy)
+
+install(TARGETS ssim2
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

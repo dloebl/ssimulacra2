@@ -4,7 +4,7 @@ mkdir build
 cd build
 cmake ../src -G Ninja
 
-if ninja ssimulacra2
+if ninja ssimulacra2 ssim2
 then
   strip ssimulacra2
   cd ..
